@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.G.N.I. // TACTICAL COMMAND</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header class="header-bar">
+        <div class="brand-section">
+            <div class="brand-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#ff5500"/>
+                    <path d="M2 17L12 22L22 17" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="brand-titles">
+                <h1 class="brand-main">A.G.N.I. // TACTICAL COMMAND</h1>
+                <p class="brand-sub">DRDO ROBOTICS LABS // ARDUINO R4 CORE</p>
+            </div>
+        </div>
+
+        <div class="status-pill">
+            <span class="status-dot"></span>
+            <span id="sysStatusText">SYSTEM OPERATIONAL</span>
+        </div>
+
+        <div class="header-telemetry">
+            <div class="header-item">SYS TIME: <span id="headerClock" class="val-orange">22:12:45</span></div>
+            <div class="header-item">FPS: <span id="headerFps" class="val-orange">60.0</span></div>
+            <div class="header-item">SIGNAL: <span id="headerSignal" class="val-orange">98%</span></div>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+
+        <section class="grid-col col-left">
+            
+            <div class="hud-panel panel-ai-core">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="icon-indicator"></span>
+                        <span>AI CORE MATRIX</span>
+                    </div>
+                    <span class="header-sub cyan-text">V4.2 PROT</span>
+                </div>
+                <div class="panel-body ai-core-body">
+                    <div class="core-graphic-wrapper">
+                        <div class="core-outer-ring"></div>
+                        <div class="core-middle-ring"></div>
+                        <div class="core-inner-glow"></div>
+                        <div class="core-center-orb"></div>
+                    </div>
+                    <div class="core-status-text">STANDBY // AWAITING COMMANDS</div>
+                </div>
+            </div>
+
+            <div class="hud-panel panel-telemetry">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="icon-indicator"></span>
+                        <span>SYSTEM TELEMETRY</span>
+                    </div>
+                </div>
+                <div class="panel-body telemetry-grid">
+                    
+                    <div class="telemetry-card">
+                        <span class="card-label">MAIN BATTERY</span>
+                        <span class="card-val" id="valBattery">12.4V</span>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill fill-orange" id="barBattery" style="width: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="telemetry-card">
+                        <span class="card-label">CORE TEMP</span>
+                        <span class="card-val" id="valTemp">34.2°C</span>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill fill-orange" id="barTemp" style="width: 45%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="telemetry-card">
+                        <span class="card-label">WATER LEVEL</span>
+                        <span class="card-val" id="valWater">92%</span>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill fill-cyan" id="barWater" style="width: 92%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="telemetry-card">
+                        <span class="card-label">SERVO ANGLE</span>
+                        <span class="card-val" id="valServo">80°</span>
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill fill-orange" id="barServo" style="width: 44%;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="hud-panel panel-radar">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="icon-indicator"></span>
+                        <span>SECTOR RADAR</span>
+                    </div>
+                    <span class="header-sub cyan-text">360° SWEEP</span>
+                </div>
+                <div class="panel-body radar-body">
+                    <canvas id="radarCanvas"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="grid-col col-center">
+
+            <div class="hud-panel panel-drive">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="icon-indicator"></span>
+                        <span>TACTICAL DRIVE CONTROL</span>
+                    </div>
+                    <span class="header-sub orange-sub">MANUAL NAVIGATION SYSTEM</span>
+                </div>
+                
+                <div class="panel-body dpad-body">
+                    <div class="circuit-bg-overlay"></div>
+
+                    <div class="dpad-grid">
+                        <button class="dpad-btn btn-forward" id="btnUp">
+                            <span class="btn-arrow">▲</span>
+                            <span class="btn-text">FORWARD</span>
+                            <span class="btn-key">[W]</span>
+                        </button>
+
+                        <button class="dpad-btn btn-left" id="btnLeft">
+                            <span class="btn-arrow">◀</span>
+                            <span class="btn-text">LEFT</span>
+                            <span class="btn-key">[A]</span>
+                        </button>
+
+                        <button class="dpad-btn btn-stop" id="btnStop">
+                            <span class="btn-text stop-text">STOP</span>
+                            <span class="btn-key stop-key">[SPACE]</span>
+                        </button>
+
+                        <button class="dpad-btn btn-right" id="btnRight">
+                            <span class="btn-arrow">▶</span>
+                            <span class="btn-text">RIGHT</span>
+                            <span class="btn-key">[D]</span>
+                        </button>
+
+                        <button class="dpad-btn btn-backward" id="btnDown">
+                            <span class="btn-arrow">▼</span>
+                            <span class="btn-text">BACKWARD</span>
+                            <span class="btn-key">[S]</span>
+                        </button>
+                    </div>
+
+                    <div class="dpad-footer-text">
+                        W / A / S / D &nbsp; OR &nbsp; ARROW KEYS TO DRIVE &nbsp;&bull;&nbsp; <span class="red-highlight">SPACE TO STOP</span> &nbsp;&bull;&nbsp; E-STOP FOR EMERGENCY
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-controls-row">
+    <div class="hud-panel sub-panel full-width-pump">
+        <div class="sub-panel-content">
+            <div class="sub-icon cyan-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+            </div>
+            <div class="sub-text">
+                <span class="sub-title">PUMP CONTROL SYSTEM</span>
+                <span class="sub-desc">WATER SUPPRESSION / HIGH PRESSURE INJECTION</span>
+            </div>
+            <div class="pump-status-indicator" id="pumpStatusLabel">SYSTEM READY</div>
+            <button class="pump-toggle-btn" id="btnPumpToggle">ENGAGE PUMP</button>
+        </div>
+    </div>
+</div>
+            </div>
+
+            <div class="hud-panel panel-terminal">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="terminal-prompt">>_</span>
+                        <span>COMMAND TERMINAL OUTPUT</span>
+                    </div>
+                </div>
+                <div class="panel-body terminal-body" id="terminalOutput">
+                    </div>
+            </div>
+
+        </section>
+
+        <section class="grid-col col-right">
+
+            <div class="hud-panel panel-nozzle">
+                <div class="panel-header">
+                    <div class="header-title">
+                        <span class="icon-indicator"></span>
+                        <span>NOZZLE AIM CONTROL</span>
+                    </div>
+                    <span class="header-sub cyan-text">[ Q / E ]</span>
+                </div>
+
+                <div class="panel-body nozzle-body">
+                    
+                    <div class="gauge-wrapper">
+                        <canvas id="gaugeCanvas" width="280" height="150"></canvas>
+                        <div class="gauge-center-readout">
+                            <span class="gauge-value" id="nozzleAngleText">80°</span>
+                            <span class="gauge-label">CURRENT ANGLE</span>
+                        </div>
+                    </div>
+
+                    <div class="rotate-controls-container">
+                        <button class="rotate-btn" id="btnRotateLeft">
+                            <span class="chevrons">«</span>
+                            <div class="rotate-btn-meta">
+                                <span class="step-val">-10°</span>
+                                <span class="step-lbl">ROTATE LEFT</span>
+                                <span class="step-key">[ Q ]</span>
+                            </div>
+                        </button>
+                        
+                        <div class="rotate-divider"></div>
+
+                        <button class="rotate-btn" id="btnRotateRight">
+                            <div class="rotate-btn-meta">
+                                <span class="step-val">+10°</span>
+                                <span class="step-lbl">ROTATE RIGHT</span>
+                                <span class="step-key">[ E ]</span>
+                            </div>
+                            <span class="chevrons">»</span>
+                        </button>
+                    </div>
+
+                    <div class="servo-track-box">
+                        <div class="servo-track-title">SERVO POSITION</div>
+                        <div class="servo-ticks-scale">
+                            <span>0°</span>
+                            <span>90°</span>
+                            <span>180°</span>
+                        </div>
+                        <div class="custom-ticks-bar" id="customTicksBar"></div>
+                        <input type="range" min="0" max="180" value="80" class="servo-range-input" id="servoSlider">
+                    </div>
+
+                    <div class="servo-status-bar">
+                        <span>SERVO STATUS</span>
+                        <span class="status-online-text">ONLINE</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="hazard-emergency-btn" id="btnEmergencyStop">
+                <div class="hazard-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                <div class="hazard-text-group">
+                    <span class="hazard-title">EMERGENCY STOP</span>
+                    <span class="hazard-sub">SYSTEM SHUTDOWN</span>
+                </div>
+            </button>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
+<div class="mode-toggle-container">
+    <button id="btnManualMode" class="mode-btn active">MANUAL MODE</button>
+    <button id="btnAutoMode" class="mode-btn">AUTO / AI MODE</button>
+</div>
